@@ -27,7 +27,7 @@ const home = homeOf(lang);
         </div>
       </div>
       <div class="md:[margin-inline-end:calc(50%-50vw)] -mx-5 md:mx-0">
-        <div id="svc-track" class="flex gap-1 overflow-x-auto scroll-smooth px-5 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div id="svc-track" class="flex gap-1 overflow-x-auto scroll-smooth px-5 md:px-0 md:pe-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {t.services.items.map((x: any, i: number) => {
             const [first, ...rest] = x.title.split(' ');
             const im = img(x.image) || `/services/${fallbackFor[x.icon] ?? 'projects'}.svg`;
@@ -77,10 +77,23 @@ const home = homeOf(lang);
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var DURATION = 6000, current = 0, timer = null, hovered = false, visible = false;
       track.style.setProperty('--svc-duration', DURATION + 'ms');
-      function reveal(panel) {
-        var tr = track.getBoundingClientRect(), pr = panel.getBoundingClientRect(), pad = 20;
-        var delta = rtl ? pr.right - tr.right + pad : pr.left - tr.left - pad;
-        if (Math.abs(delta) > 2) track.scrollBy({ left: delta, behavior: 'smooth' });
+      function reveal(i) {
+        var p = panels[i], tr = track.getBoundingClientRect(), pr = p.getBoundingClientRect();
+        var vw = document.documentElement.clientWidth;
+        var visible = rtl ? tr.right - Math.max(tr.left, 0) : Math.min(tr.right, vw) - tr.left;
+        var scrolled = Math.abs(track.scrollLeft);
+        var start = (rtl ? tr.right - pr.right : pr.left - tr.left) + scrolled;
+        var target = start + pr.width <= visible ? 0 : start;
+        if (Math.abs(target - scrolled) > 1) track.scrollTo({ left: rtl ? -target : target, behavior: 'smooth' });
+      }
+      var pending = null;
+      function settle(i) {
+        clearTimeout(pending);
+        var done = false, p = panels[i];
+        function go() { if (done) return; done = true; p.removeEventListener('transitionend', onEnd); reveal(i); }
+        function onEnd(e) { if (e.target === p && e.propertyName === 'width') go(); }
+        p.addEventListener('transitionend', onEnd);
+        pending = setTimeout(go, 800);
       }
       function activate(n, user) {
         current = (n + panels.length) % panels.length;
@@ -93,7 +106,7 @@ const home = homeOf(lang);
           void bar.offsetWidth;
           bar.style.animation = '';
         });
-        setTimeout(function () { reveal(panels[current]); }, 720);
+        settle(current);
         if (user) restart();
       }
       function running() { return !reduce && visible && !hovered; }

@@ -40,59 +40,109 @@
     "title": "Our services",
     "items": [
       {
-        "body": "",
-        "details": [],
-        "slug": "electrical-generators",
-        "text": "Maintenance, operation and inspection of electrical generators to keep power running.",
-        "seo_title": "",
-        "title": "Electrical generators",
+        "slug": "generators",
         "icon": "bolt",
-        "seo_description": "",
-        "image": ""
+        "title": "Electrical generators",
+        "text": "Maintenance, operation and inspection of electrical generators to keep power running.",
+        "image": "https://unsplash.com/photos/b574W0nYoyg/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "Preventive and scheduled generator maintenance"
+          },
+          {
+            "text": "Generator operation and performance monitoring"
+          },
+          {
+            "text": "Generator inspection and readiness checks"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
-        "slug": "telecom-fiber-optics",
-        "text": "Laying telecom and fiber optic cables and carrying out the related technical works.",
-        "seo_title": "",
-        "title": "Telecom & fiber optics",
+        "slug": "fiber-optics",
         "icon": "cable",
-        "seo_description": "",
-        "image": ""
+        "title": "Telecom & fiber optics",
+        "text": "Laying telecom and fiber optic cables and carrying out the related technical works.",
+        "image": "https://unsplash.com/photos/8oR7XykOjk4/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "Telecom cable installation"
+          },
+          {
+            "text": "Fiber optic cable installation"
+          },
+          {
+            "text": "Related technical works"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
         "slug": "telecom-towers",
-        "text": "Maintenance and operation of generator fuel tanks at telecom tower sites.",
-        "seo_title": "",
-        "title": "Telecom towers",
         "icon": "tower",
-        "seo_description": "",
-        "image": ""
+        "title": "Telecom towers",
+        "text": "Maintenance and operation of generator fuel tanks at telecom tower sites.",
+        "image": "https://unsplash.com/photos/epCtK7ZRf3w/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "Generator fuel tank maintenance"
+          },
+          {
+            "text": "Fuel tank operation and monitoring"
+          },
+          {
+            "text": "Field work at telecom tower sites"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
         "slug": "industrial-oils",
-        "text": "Supply, sales and trading of industrial oils for facilities and equipment.",
-        "seo_title": "",
-        "title": "Industrial oils",
         "icon": "drop",
-        "seo_description": "",
-        "image": ""
+        "title": "Industrial oils",
+        "text": "Supply, sales and trading of industrial oils for facilities and equipment.",
+        "image": "https://unsplash.com/photos/IUwLkxL49co/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "Industrial oil supply"
+          },
+          {
+            "text": "Industrial oil sales"
+          },
+          {
+            "text": "Industrial oil trading for facilities and equipment"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
         "slug": "telecom-projects",
-        "text": "Technical and field works for telecom companies' projects.",
-        "seo_title": "",
-        "title": "Telecom projects",
         "icon": "tool",
-        "seo_description": "",
-        "image": ""
+        "title": "Telecom projects",
+        "text": "Technical and field works for telecom companies' projects.",
+        "image": "https://unsplash.com/photos/9kYa--GkBPs/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "Technical works for telecom companies' projects"
+          },
+          {
+            "text": "On-site field works"
+          },
+          {
+            "text": "Working to telecom operators' requirements and standards"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       }
     ],
     "more": "Request service",

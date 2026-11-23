@@ -40,59 +40,109 @@
     "title": "خدماتنا",
     "items": [
       {
-        "body": "",
-        "details": [],
-        "slug": "electrical-generators",
-        "text": "صيانة وتشغيل وفحص المولدات الكهربائية بما يضمن جاهزيتها واستمرارية الطاقة.",
-        "seo_title": "",
-        "title": "المولدات الكهربائية",
+        "slug": "generators",
         "icon": "bolt",
-        "seo_description": "",
-        "image": ""
+        "title": "المولدات الكهربائية",
+        "text": "صيانة وتشغيل وفحص المولدات الكهربائية بما يضمن جاهزيتها واستمرارية الطاقة.",
+        "image": "https://unsplash.com/photos/b574W0nYoyg/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "صيانة دورية ووقائية للمولدات الكهربائية"
+          },
+          {
+            "text": "تشغيل المولدات ومتابعة أدائها"
+          },
+          {
+            "text": "فحص المولدات والتأكد من جاهزيتها"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
-        "slug": "telecom-fiber-optics",
-        "text": "تمديد كابلات الاتصالات والألياف الضوئية وتنفيذ أعمالها الفنية.",
-        "seo_title": "",
-        "title": "الاتصالات والألياف الضوئية",
+        "slug": "fiber-optics",
         "icon": "cable",
-        "seo_description": "",
-        "image": ""
+        "title": "الاتصالات والألياف الضوئية",
+        "text": "تمديد كابلات الاتصالات والألياف الضوئية وتنفيذ أعمالها الفنية.",
+        "image": "https://unsplash.com/photos/8oR7XykOjk4/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "تمديد كابلات الاتصالات"
+          },
+          {
+            "text": "تمديد كابلات الألياف الضوئية (Fiber Optic)"
+          },
+          {
+            "text": "تنفيذ الأعمال الفنية المرتبطة بالتمديد"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
         "slug": "telecom-towers",
-        "text": "صيانة وتشغيل خزانات وقود المولدات في مواقع أبراج الاتصالات.",
-        "seo_title": "",
-        "title": "أبراج الاتصالات",
         "icon": "tower",
-        "seo_description": "",
-        "image": ""
+        "title": "أبراج الاتصالات",
+        "text": "صيانة وتشغيل خزانات وقود المولدات في مواقع أبراج الاتصالات.",
+        "image": "https://unsplash.com/photos/epCtK7ZRf3w/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "صيانة خزانات وقود المولدات"
+          },
+          {
+            "text": "تشغيل خزانات الوقود ومتابعتها"
+          },
+          {
+            "text": "العمل الميداني في مواقع أبراج الاتصالات"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
         "slug": "industrial-oils",
-        "text": "توريد وبيع وتجارة الزيوت الصناعية للمنشآت والمعدات.",
-        "seo_title": "",
-        "title": "الزيوت الصناعية",
         "icon": "drop",
-        "seo_description": "",
-        "image": ""
+        "title": "الزيوت الصناعية",
+        "text": "توريد وبيع وتجارة الزيوت الصناعية للمنشآت والمعدات.",
+        "image": "https://unsplash.com/photos/IUwLkxL49co/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "توريد الزيوت الصناعية"
+          },
+          {
+            "text": "بيع الزيوت الصناعية"
+          },
+          {
+            "text": "تجارة الزيوت الصناعية للمنشآت والمعدات"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       },
       {
-        "body": "",
-        "details": [],
         "slug": "telecom-projects",
-        "text": "تنفيذ الأعمال الفنية والميدانية لمشاريع شركات الاتصالات.",
-        "seo_title": "",
-        "title": "مشاريع الاتصالات",
         "icon": "tool",
-        "seo_description": "",
-        "image": ""
+        "title": "مشاريع الاتصالات",
+        "text": "تنفيذ الأعمال الفنية والميدانية لمشاريع شركات الاتصالات.",
+        "image": "https://unsplash.com/photos/9kYa--GkBPs/download?force=true&w=1200",
+        "details": [
+          {
+            "text": "تنفيذ الأعمال الفنية لمشاريع شركات الاتصالات"
+          },
+          {
+            "text": "تنفيذ الأعمال الميدانية في المواقع"
+          },
+          {
+            "text": "العمل وفق متطلبات ومعايير شركات الاتصالات"
+          }
+        ],
+        "body": "",
+        "seo_title": "",
+        "seo_description": ""
       }
     ],
     "more": "اطلب الخدمة",
