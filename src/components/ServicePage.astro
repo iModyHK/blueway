@@ -1,0 +1,56 @@
+---
+import Layout from './Layout.astro';
+import Contact from './sections/Contact.astro';
+import { content, nameOf, homeOf, img, icons, on, fallbackFor, type Lang } from '../lib/site';
+import { html } from '../lib/news';
+
+interface Props { lang: Lang; slug: string }
+const { lang, slug } = Astro.props;
+const t = content(lang);
+const items: any[] = t.services.items;
+const x = items.find((i) => i.slug === slug);
+const others = items.filter((i) => i.slug && i.slug !== slug);
+const home = homeOf(lang);
+const alt = content(lang === 'ar' ? 'en' : 'ar').services.items.find((i: any) => i.slug === slug);
+const altPath = alt ? `${homeOf(lang === 'ar' ? 'en' : 'ar')}services/${slug}/` : homeOf(lang === 'ar' ? 'en' : 'ar');
+const fb = `/services/${fallbackFor[x.icon] ?? 'projects'}.svg`;
+const image = img(x.image) || fb;
+const [first, ...rest] = x.title.split(' ');
+---
+<Layout lang={lang} path={`${home}services/${slug}/`} altPath={altPath} title={x.seo_title || `${x.title} | ${nameOf(lang)}`} description={x.seo_description || x.text}>
+  <section class="relative overflow-hidden bg-dark text-white">
+    <img src={image} alt="" fetchpriority="high" referrerpolicy="no-referrer" onerror={`this.onerror=null;this.src='${fb}'`} class="absolute inset-0 h-full w-full object-cover opacity-35" />
+    <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/30"></div>
+    <div class="relative max-w-6xl mx-auto px-5 py-20 md:py-28">
+      <nav class="text-sm text-white/70 mb-6" aria-label="breadcrumb"><a href={home} class="hover:text-white">{nameOf(lang)}</a> <span class="mx-2">/</span> <a href={`${home}#services`} class="hover:text-white">{t.nav.services}</a></nav>
+      <div class="w-14 h-14 rounded-2xl grid place-items-center text-white shadow-lg mb-6" style="background:linear-gradient(135deg,var(--brand-accent),var(--brand-primary))"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d={icons[x.icon] ?? icons.building} /></svg></div>
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight max-w-3xl"><span class="text-accent">{first}</span> {rest.join(' ')}</h1>
+      <p class="mt-5 text-lg text-white/80 leading-relaxed max-w-2xl">{x.text}</p>
+      {t.services.more && <a href="#contact" class="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-bold text-dark hover:brightness-110 transition">{t.services.more}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>}
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-5 py-20 grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] gap-12">
+    <div>
+      {x.body && <div class="prose" set:html={html(x.body)} />}
+      {(x.details ?? []).length > 0 && (
+        <div class={x.body ? 'mt-10' : ''}>
+          <h2 class="text-2xl font-bold text-dark mb-5">{t.services.details_title}</h2>
+          <ul class="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 gap-3">
+            {x.details.map((d: any) => <li class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><span class="mt-0.5 w-6 h-6 shrink-0 rounded-full bg-primary/10 text-primary grid place-items-center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M5 12l5 5L20 7" /></svg></span>{d.text}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+    {others.length > 0 && (
+      <aside class="self-start rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-200/70">
+        <h2 class="font-bold text-dark mb-4">{t.services.other_title}</h2>
+        <ul class="space-y-2">
+          {others.map((o) => <li><a href={`${home}services/${o.slug}/`} class="flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-slate-200/70 hover:ring-primary transition"><span class="w-9 h-9 shrink-0 rounded-lg bg-primary/10 text-primary grid place-items-center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={icons[o.icon] ?? icons.building} /></svg></span><span class="text-sm font-bold text-dark">{o.title}</span></a></li>)}
+        </ul>
+      </aside>
+    )}
+  </section>
+
+  {on('contact') && <Contact lang={lang} preselect={x.title} />}
+</Layout>

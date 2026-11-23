@@ -1,0 +1,35 @@
+---
+import { s, on, content, nameOf, homeOf, img, icons, social, fallbackFor, initials, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const home = homeOf(lang);
+const certs = t.certificates?.items ?? [];
+---
+{certs.length > 0 && (
+    <section id="certificates" class="bg-slate-50 py-24">
+      <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+          <span class="text-primary font-bold text-sm">{t.certificates.eyebrow}</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-dark mt-2">{t.certificates.title}</h2>
+        </div>
+        <div class="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {certs.map((x: any) => (
+            <div class="flex items-center gap-5 rounded-3xl bg-white p-6 ring-1 ring-slate-200/70">
+              <div class="w-16 h-16 shrink-0 rounded-2xl grid place-items-center overflow-hidden bg-primary/10 text-primary">
+                {x.image ? <img src={img(x.image)} alt={x.title} loading="lazy" class="max-w-full max-h-full object-contain" /> : <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={icons.award} /></svg>}
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-bold text-dark leading-snug">{x.title}</h3>
+                {x.issuer && <div class="text-sm text-slate-500 mt-1">{x.issuer}</div>}
+                {x.number && <div class="text-xs text-slate-400 mt-1 tabular-nums" dir="ltr">{x.number}</div>}
+                {x.file && <a href={img(x.file)} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-sm font-bold text-primary mt-2 hover:text-dark">{t.certificates.view}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}

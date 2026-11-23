@@ -1,0 +1,12 @@
+---
+import NewsPost from '../../components/NewsPost.astro';
+import { on } from '../../lib/site';
+import { posts } from '../../lib/news';
+
+export function getStaticPaths() {
+  if (!on('news')) return [];
+  return posts().map((p) => ({ params: { slug: p.slug } }));
+}
+const { slug } = Astro.params;
+---
+<NewsPost lang="ar" slug={slug} />

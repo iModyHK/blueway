@@ -1,0 +1,18 @@
+---
+import { img, homeOf, type Lang } from '../lib/site';
+import { field, fmtDate } from '../lib/news';
+
+interface Props { lang: Lang; post: any }
+const { lang, post } = Astro.props;
+const title = field(post, 'title', lang);
+---
+<a href={`${homeOf(lang)}news/${post.slug}/`} class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200/70 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10">
+  <div class="relative aspect-[16/10] overflow-hidden" style="background:linear-gradient(135deg,var(--brand-primary),var(--brand-dark))">
+    {post.image && <img src={img(post.image)} alt={title} loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />}
+  </div>
+  <div class="flex flex-1 flex-col p-6">
+    <time datetime={post.date} class="text-xs font-bold text-primary">{fmtDate(post.date, lang)}</time>
+    <h3 class="mt-2 text-lg font-bold leading-snug text-dark">{title}</h3>
+    {field(post, 'excerpt', lang) && <p class="mt-2 text-sm leading-relaxed text-slate-500 line-clamp-3">{field(post, 'excerpt', lang)}</p>}
+  </div>
+</a>

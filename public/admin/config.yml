@@ -1,0 +1,509 @@
+backend:
+  name: github
+  repo: iModyHK/blueway
+  branch: main
+  api_root: https://bluewaysa.com/oauth/api.php
+  base_url: https://bluewaysa.com
+  auth_endpoint: oauth/auth.php
+  commit_messages:
+    update: "تحديث {{slug}}"
+    uploadMedia: "رفع {{path}}"
+    deleteMedia: "حذف {{path}}"
+
+local_backend: true
+locale: ar
+site_url: https://bluewaysa.com
+display_url: https://bluewaysa.com
+logo_url: /brand/logo.png
+
+media_folder: public/uploads
+public_folder: /uploads
+
+x-icons: &icons
+  - { label: مبنى, value: building }
+  - { label: عين, value: eye }
+  - { label: علامة صح, value: check }
+  - { label: رسم بياني, value: chart }
+  - { label: درع, value: shield }
+  - { label: أشخاص, value: users }
+  - { label: أداة, value: tool }
+  - { label: ورقة شجر, value: leaf }
+  - { label: كهرباء, value: bolt }
+  - { label: كابل, value: cable }
+  - { label: برج, value: tower }
+  - { label: قطرة, value: drop }
+
+x-sections: &sectionkeys
+  - { label: الأرقام, value: stats }
+  - { label: من نحن, value: about }
+  - { label: الخدمات, value: services }
+  - { label: معرض الأعمال, value: projects }
+  - { label: الاعتمادات, value: certificates }
+  - { label: الشركاء, value: clients }
+  - { label: آراء العملاء, value: testimonials }
+  - { label: الأسئلة الشائعة, value: faq }
+  - { label: الأخبار, value: news }
+  - { label: الخريطة, value: map }
+  - { label: التواصل, value: contact }
+
+x-after: &afterkeys
+  - { label: بعد الواجهة الرئيسية, value: hero }
+  - { label: بعد الأرقام, value: stats }
+  - { label: بعد من نحن, value: about }
+  - { label: بعد الخدمات, value: services }
+  - { label: بعد معرض الأعمال, value: projects }
+  - { label: بعد الاعتمادات, value: certificates }
+  - { label: بعد الشركاء, value: clients }
+  - { label: بعد آراء العملاء, value: testimonials }
+  - { label: بعد الأسئلة الشائعة, value: faq }
+  - { label: بعد الأخبار, value: news }
+  - { label: بعد الخريطة, value: map }
+  - { label: بعد التواصل, value: contact }
+
+x-page: &page
+  - label: محركات البحث (SEO)
+    name: seo
+    widget: object
+    collapsed: true
+    hint: يظهر في نتائج Google وعند مشاركة الرابط
+    fields:
+      - { label: عنوان الصفحة, name: title, widget: string, hint: "60 حرفاً تقريباً" }
+      - { label: الوصف, name: description, widget: text, hint: "150 حرفاً تقريباً" }
+      - { label: الكلمات المفتاحية, name: keywords, widget: string, required: false, hint: "مفصولة بفواصل" }
+  - { label: الوصف المختصر, name: tagline, widget: string }
+  - label: القائمة العلوية
+    name: nav
+    widget: object
+    collapsed: true
+    fields:
+      - { label: من نحن, name: about, widget: string }
+      - { label: الخدمات, name: services, widget: string }
+      - { label: الأعمال, name: projects, widget: string, required: false }
+      - { label: الاعتمادات, name: certificates, widget: string, required: false }
+      - { label: الشركاء, name: clients, widget: string, required: false }
+      - { label: آراء العملاء, name: testimonials, widget: string, required: false }
+      - { label: الأسئلة الشائعة, name: faq, widget: string, required: false }
+      - { label: الأخبار, name: news, widget: string, required: false }
+      - { label: التواصل, name: contact, widget: string }
+  - label: الواجهة الرئيسية
+    name: hero
+    widget: object
+    fields:
+      - { label: الشارة, name: badge, widget: string, required: false }
+      - { label: العنوان, name: title, widget: string }
+      - { label: النص, name: text, widget: text }
+      - { label: الزر الأساسي, name: cta, widget: string }
+      - { label: الزر الثانوي, name: cta2, widget: string }
+      - { label: صورة الخلفية, name: image, widget: image, required: false }
+  - label: الأرقام
+    name: stats
+    widget: list
+    label_singular: رقم
+    summary: "{{fields.value}} — {{fields.label}}"
+    max: 4
+    required: false
+    fields:
+      - { label: الرقم, name: value, widget: string, hint: "مثال: +120" }
+      - { label: الوصف, name: label, widget: string }
+  - label: من نحن
+    name: about
+    widget: object
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: النص, name: text, widget: text }
+      - { label: كلمة "منذ", name: since, widget: string }
+      - { label: الصورة, name: image, widget: image, required: false }
+      - label: المميزات
+        name: points
+        widget: list
+        label_singular: ميزة
+        summary: "{{fields.text}}"
+        fields:
+          - { label: النص, name: text, widget: string }
+  - label: الخدمات
+    name: services
+    widget: object
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: المقدمة, name: intro, widget: text, required: false }
+      - { label: نص زر الطلب, name: more, widget: string, required: false }
+      - { label: نص زر التفاصيل, name: view, widget: string, required: false }
+      - { label: عنوان "ماذا تشمل الخدمة" في صفحة الخدمة, name: details_title, widget: string, required: false }
+      - { label: عنوان "خدمات أخرى" في صفحة الخدمة, name: other_title, widget: string, required: false }
+      - label: قائمة الخدمات
+        name: items
+        widget: list
+        label_singular: خدمة
+        summary: "{{fields.title}}"
+        fields:
+          - { label: الأيقونة, name: icon, widget: select, default: building, options: *icons }
+          - { label: الاسم, name: title, widget: string }
+          - { label: رابط الصفحة (بالإنجليزي), name: slug, widget: string, required: false, pattern: ['^[a-z0-9-]*$', 'أحرف إنجليزية صغيرة وأرقام وشرطة فقط'], hint: "مثال: generators — استخدم نفس الرابط في الصفحتين العربية والإنجليزية" }
+          - { label: الوصف المختصر, name: text, widget: text }
+          - { label: الصورة, name: image, widget: image, required: false }
+          - { label: محتوى صفحة الخدمة (اختياري), name: body, widget: markdown, required: false, buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote], editor_components: [image] }
+          - { label: عنوان الصفحة في Google, name: seo_title, widget: string, required: false }
+          - { label: وصف الصفحة في Google, name: seo_description, widget: text, required: false }
+          - label: التفاصيل
+            name: details
+            widget: list
+            label_singular: نقطة
+            summary: "{{fields.text}}"
+            required: false
+            fields:
+              - { label: النص, name: text, widget: string }
+  - label: معرض الأعمال
+    name: projects
+    widget: object
+    collapsed: true
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: المقدمة, name: intro, widget: text, required: false }
+      - { label: زر "الكل" في التصنيفات, name: all, widget: string }
+      - label: المشاريع
+        name: items
+        widget: list
+        label_singular: مشروع
+        summary: "{{fields.title}} — {{fields.location}}"
+        required: false
+        fields:
+          - { label: اسم المشروع, name: title, widget: string }
+          - { label: الصورة, name: image, widget: image }
+          - { label: الموقع, name: location, widget: string, required: false }
+          - { label: التصنيف, name: category, widget: string, required: false, hint: "يظهر كزر تصفية، استخدم نفس الكلمة للمشاريع المتشابهة" }
+          - { label: السنة, name: year, widget: string, required: false }
+          - { label: وصف قصير, name: text, widget: text, required: false }
+  - label: الاعتمادات والشهادات
+    name: certificates
+    widget: object
+    collapsed: true
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: نص زر العرض, name: view, widget: string }
+      - label: الشهادات
+        name: items
+        widget: list
+        label_singular: شهادة
+        summary: "{{fields.title}}"
+        required: false
+        fields:
+          - { label: اسم الشهادة / الترخيص, name: title, widget: string }
+          - { label: الجهة المانحة, name: issuer, widget: string, required: false }
+          - { label: الرقم, name: number, widget: string, required: false }
+          - { label: شعار أو صورة, name: image, widget: image, required: false }
+          - { label: ملف الشهادة (PDF أو صورة), name: file, widget: file, required: false }
+  - label: آراء العملاء
+    name: testimonials
+    widget: object
+    collapsed: true
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - label: الآراء
+        name: items
+        widget: list
+        label_singular: رأي
+        summary: "{{fields.name}} — {{fields.company}}"
+        required: false
+        fields:
+          - { label: النص, name: quote, widget: text }
+          - { label: الاسم, name: name, widget: string }
+          - { label: المنصب, name: role, widget: string, required: false }
+          - { label: الشركة, name: company, widget: string, required: false }
+          - { label: الصورة, name: image, widget: image, required: false }
+          - { label: التقييم (0-5), name: rating, widget: number, value_type: int, min: 0, max: 5, default: 5, required: false }
+  - label: الأسئلة الشائعة
+    name: faq
+    widget: object
+    collapsed: true
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: المقدمة, name: intro, widget: text, required: false }
+      - label: الأسئلة
+        name: items
+        widget: list
+        label_singular: سؤال
+        summary: "{{fields.q}}"
+        required: false
+        fields:
+          - { label: السؤال, name: q, widget: string }
+          - { label: الجواب, name: a, widget: text }
+  - label: الأخبار (النصوص)
+    name: news
+    widget: object
+    collapsed: true
+    hint: الأخبار نفسها تُضاف من قسم "الأخبار" في القائمة الجانبية
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: زر كل الأخبار, name: all, widget: string }
+      - { label: عنوان أخبار أخرى, name: more, widget: string }
+      - { label: رسالة عدم وجود أخبار, name: empty, widget: string }
+  - label: أقسام مخصصة
+    name: blocks
+    widget: object
+    collapsed: true
+    hint: أضف أقساماً جديدة (نص وصورة، أو شريط دعوة) واختر مكانها في الصفحة
+    fields:
+      - label: الأقسام
+        name: items
+        widget: list
+        label_singular: قسم
+        summary: "{{fields.title}}"
+        required: false
+        fields:
+          - label: النوع
+            name: style
+            widget: select
+            default: text_image
+            options:
+              - { label: نص وصورة, value: text_image }
+              - { label: شريط دعوة (CTA), value: cta }
+          - { label: المكان, name: after, widget: select, default: about, options: *afterkeys }
+          - { label: العنوان الصغير, name: eyebrow, widget: string, required: false }
+          - { label: العنوان, name: title, widget: string }
+          - { label: النص, name: text, widget: text, required: false }
+          - { label: الصورة, name: image, widget: image, required: false }
+          - label: جهة الصورة
+            name: image_side
+            widget: select
+            default: start
+            required: false
+            options:
+              - { label: البداية, value: start }
+              - { label: النهاية, value: end }
+          - { label: نص الزر, name: button_label, widget: string, required: false }
+          - { label: رابط الزر, name: button_link, widget: string, required: false, hint: "مثال: #contact أو https://..." }
+  - label: الشركاء
+    name: clients
+    widget: object
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - label: قائمة الشركاء
+        name: items
+        widget: list
+        label_singular: شريك
+        summary: "{{fields.name}}"
+        required: false
+        fields:
+          - { label: الاسم, name: name, widget: string }
+          - { label: الشعار, name: logo, widget: image, required: false }
+          - { label: اختصار يظهر بدون شعار, name: short, widget: string, required: false }
+  - label: الخريطة
+    name: map
+    widget: object
+    collapsed: true
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: زر فتح الخريطة, name: open, widget: string }
+  - label: التواصل والنموذج
+    name: contact
+    widget: object
+    collapsed: true
+    fields:
+      - { label: العنوان الصغير, name: eyebrow, widget: string }
+      - { label: العنوان, name: title, widget: string }
+      - { label: النص, name: text, widget: text }
+      - { label: العنوان الجغرافي, name: address, widget: string }
+      - { label: عنوان النموذج, name: form_title, widget: string, required: false }
+      - label: حقول النموذج
+        name: fields
+        widget: list
+        label_singular: حقل
+        summary: "{{fields.label}} ({{fields.type}})"
+        hint: اسحب لترتيب الحقول. حقل "الخدمات" يعرض قائمة الخدمات تلقائياً
+        fields:
+          - { label: العنوان الظاهر, name: label, widget: string }
+          - { label: المعرف (إنجليزي), name: name, widget: string, pattern: ['^[a-z0-9_]+$', 'أحرف إنجليزية صغيرة وأرقام و _ فقط'], hint: "مثال: company_name — يجب أن يكون فريداً" }
+          - label: النوع
+            name: type
+            widget: select
+            default: text
+            options:
+              - { label: نص قصير, value: text }
+              - { label: بريد إلكتروني, value: email }
+              - { label: جوال, value: tel }
+              - { label: رقم, value: number }
+              - { label: تاريخ, value: date }
+              - { label: نص طويل, value: textarea }
+              - { label: قائمة اختيار, value: select }
+              - { label: قائمة الخدمات, value: services }
+              - { label: مرفقات, value: file }
+          - { label: إلزامي, name: required, widget: boolean, default: false }
+          - { label: نصف العرض, name: half, widget: boolean, default: false }
+          - label: الخيارات (لقائمة الاختيار)
+            name: options
+            widget: list
+            label_singular: خيار
+            summary: "{{fields.text}}"
+            required: false
+            fields:
+              - { label: النص, name: text, widget: string }
+      - { label: خيار "أخرى" في قائمة الخدمات, name: service_other, widget: string, required: false }
+      - { label: زر الإرسال, name: send, widget: string }
+      - { label: زر واتساب (اتركه فارغاً لإخفائه), name: whatsapp, widget: string, required: false }
+      - { label: أثناء الإرسال, name: sending, widget: string }
+      - { label: رسالة النجاح, name: sent, widget: string }
+      - { label: رسالة الفشل, name: failed, widget: string }
+      - { label: رسالة حجم الملفات, name: too_large, widget: string }
+      - { label: رسالة التحقق, name: captcha, widget: string }
+  - label: الملف التعريفي PDF
+    name: profile
+    widget: object
+    collapsed: true
+    fields:
+      - { label: نص زر التحميل, name: button, widget: string }
+      - { label: عنوان الملف, name: title, widget: string }
+      - { label: زر الطباعة, name: print, widget: string }
+      - { label: عنوان قسم التواصل, name: contact, widget: string }
+  - label: التذييل
+    name: footer
+    widget: object
+    collapsed: true
+    fields:
+      - { label: الحقوق, name: rights, widget: string }
+      - { label: كلمة "سجل تجاري", name: cr, widget: string }
+      - { label: عبارة "تصميم وبرمجة", name: credit, widget: string }
+
+collections:
+  - name: site
+    label: محتوى الموقع
+    editor:
+      preview: false
+    files:
+      - name: settings
+        label: الإعدادات العامة وإظهار الأقسام
+        file: src/content/settings.json
+        fields:
+          - label: إظهار / إخفاء الأقسام
+            name: sections
+            widget: object
+            hint: فعّل أو ألغِ أي قسم ثم اضغط نشر
+            fields:
+              - { label: الأرقام والإحصائيات, name: stats, widget: boolean, default: false }
+              - { label: من نحن, name: about, widget: boolean, default: true }
+              - { label: الخدمات, name: services, widget: boolean, default: true }
+              - { label: معرض الأعمال, name: projects, widget: boolean, default: false }
+              - { label: الاعتمادات والشهادات, name: certificates, widget: boolean, default: false }
+              - { label: الشركاء, name: clients, widget: boolean, default: true }
+              - { label: آراء العملاء, name: testimonials, widget: boolean, default: false }
+              - { label: الأسئلة الشائعة, name: faq, widget: boolean, default: false }
+              - { label: الأخبار, name: news, widget: boolean, default: false }
+              - { label: الأقسام المخصصة, name: blocks, widget: boolean, default: false }
+              - { label: الخريطة, name: map, widget: boolean, default: true }
+              - { label: نموذج التواصل, name: contact, widget: boolean, default: true }
+              - { label: صفحة مستقلة لكل خدمة, name: service_pages, widget: boolean, default: true }
+              - { label: زر واتساب, name: whatsapp, widget: boolean, default: true }
+              - { label: زر تحميل الملف التعريفي PDF, name: profile_download, widget: boolean, default: true }
+              - { label: زر تغيير اللغة, name: lang_switch, widget: boolean, default: true }
+              - { label: شعار المصمم في التذييل, name: credit, widget: boolean, default: true }
+          - label: ترتيب الأقسام
+            name: section_order
+            widget: list
+            label_singular: قسم
+            summary: "{{fields.section}}"
+            collapsed: true
+            hint: اسحب الأقسام لتغيير ترتيبها في الصفحة الرئيسية
+            fields:
+              - { label: القسم, name: section, widget: select, options: *sectionkeys }
+          - { label: اسم الشركة (عربي), name: name_ar, widget: string }
+          - { label: اسم الشركة (إنجليزي), name: name_en, widget: string }
+          - { label: الشعار, name: logo, widget: image, required: false }
+          - { label: الشعار الأبيض, name: logo_white, widget: image, required: false }
+          - { label: صورة المشاركة (1200×630), name: og_image, widget: image, required: false, hint: تظهر عند مشاركة رابط الموقع في واتساب وتويتر }
+          - { label: اللون الأساسي, name: primary, widget: color }
+          - { label: اللون المميز, name: accent, widget: color }
+          - { label: اللون الداكن, name: dark, widget: color }
+          - { label: البريد الإلكتروني (تصل له رسائل النموذج), name: email, widget: string }
+          - { label: الهاتف (للعرض), name: phone, widget: string }
+          - { label: الهاتف الدولي (للاتصال), name: phone_intl, widget: string, required: false, hint: "مثال: +966530060014" }
+          - { label: واتساب (بدون +), name: whatsapp, widget: string, required: false, hint: "مثال: 966530060014" }
+          - { label: السجل التجاري, name: cr, widget: string, required: false }
+          - { label: سنة التأسيس, name: founded, widget: string, required: false }
+          - { label: رابط الموقع, name: site_url, widget: string, hint: "مثال: https://blueway.sa — مطلوب لمحركات البحث" }
+          - { label: المدينة (بالإنجليزي), name: city, widget: string, required: false }
+          - { label: رمز الدولة, name: country, widget: string, default: SA }
+          - { label: عنوان البحث في الخريطة, name: map_query, widget: string, required: false, hint: "مثال: حي المصانع، الرياض" }
+          - { label: رابط تضمين خريطة Google (اختياري), name: map_embed, widget: string, required: false, hint: "من Google Maps: مشاركة ← تضمين خريطة ← انسخ الرابط داخل src" }
+          - { label: خط العرض, name: geo_lat, widget: string, required: false }
+          - { label: خط الطول, name: geo_lng, widget: string, required: false }
+          - label: حسابات التواصل الاجتماعي
+            name: social
+            widget: list
+            label_singular: حساب
+            summary: "{{fields.platform}}"
+            required: false
+            fields:
+              - label: المنصة
+                name: platform
+                widget: select
+                options:
+                  - { label: X (تويتر), value: x }
+                  - { label: لينكدإن, value: linkedin }
+                  - { label: إنستغرام, value: instagram }
+                  - { label: سناب شات, value: snapchat }
+                  - { label: تيك توك, value: tiktok }
+                  - { label: يوتيوب, value: youtube }
+                  - { label: فيسبوك, value: facebook }
+              - { label: الرابط, name: url, widget: string }
+          - { label: مفتاح Cloudflare Turnstile العام (اختياري), name: turnstile_site_key, widget: string, required: false, hint: لحماية النموذج من الرسائل المزعجة. المفتاح السري يوضع في site-config.php على الاستضافة }
+          - label: إحصائيات الزوار
+            name: analytics
+            widget: object
+            collapsed: true
+            fields:
+              - label: الخدمة
+                name: provider
+                widget: select
+                default: none
+                options:
+                  - { label: بدون, value: none }
+                  - { label: Umami, value: umami }
+                  - { label: Plausible, value: plausible }
+                  - { label: Google Analytics 4, value: ga4 }
+              - { label: رابط السكربت, name: src, widget: string, required: false, hint: "Umami / Plausible فقط" }
+              - { label: المعرف (Website ID / الدومين / G-XXXX), name: id, widget: string, required: false }
+          - { label: المصمم (عربي), name: credit_name_ar, widget: string, required: false }
+          - { label: المصمم (إنجليزي), name: credit_name_en, widget: string, required: false }
+          - { label: رابط المصمم, name: credit_url, widget: string, required: false }
+          - { label: شعار المصمم, name: credit_logo, widget: image, required: false }
+      - name: ar
+        label: الصفحة العربية
+        file: src/content/ar.json
+        fields: *page
+      - name: en
+        label: English page
+        file: src/content/en.json
+        fields: *page
+
+  - name: news
+    label: الأخبار
+    label_singular: خبر
+    folder: src/content/news
+    extension: json
+    format: json
+    create: true
+    slug: "{{fields.slug}}"
+    identifier_field: title_ar
+    summary: "{{fields.date}} — {{fields.title_ar}}"
+    sortable_fields: [date, title_ar]
+    editor:
+      preview: false
+    fields:
+      - { label: رابط الخبر (بالإنجليزي), name: slug, widget: string, pattern: ['^[a-z0-9-]+$', 'أحرف إنجليزية صغيرة وأرقام وشرطة فقط'] }
+      - { label: التاريخ, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD, default: '{{now}}' }
+      - { label: منشور, name: published, widget: boolean, default: true }
+      - { label: الصورة, name: image, widget: image, required: false }
+      - { label: العنوان (عربي), name: title_ar, widget: string }
+      - { label: ملخص (عربي), name: excerpt_ar, widget: text, required: false }
+      - { label: المحتوى (عربي), name: body_ar, widget: markdown, required: false }
+      - { label: Title (English), name: title_en, widget: string, required: false }
+      - { label: Excerpt (English), name: excerpt_en, widget: text, required: false }
+      - { label: Body (English), name: body_en, widget: markdown, required: false }

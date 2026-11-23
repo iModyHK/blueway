@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+public/admin/*.js
+public/admin/*.wasm
+/*.png
+public/media/
+.studio/
+server/
+site-config.php
+.astro-cache/
+.vite-cache/

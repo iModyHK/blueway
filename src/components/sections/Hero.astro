@@ -1,0 +1,53 @@
+---
+import { s, on, content, nameOf, homeOf, img, icons, social, fallbackFor, initials, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const home = homeOf(lang);
+const showStats = on('stats') && (t.stats ?? []).length > 0;
+---
+<section class="relative overflow-hidden bg-dark text-white">
+    {t.hero.image
+      ? <><img src={img(t.hero.image)} alt="" class="absolute inset-0 w-full h-full object-cover" /><div class="absolute inset-0 bg-dark/75"></div></>
+      : <><div class="absolute inset-0 opacity-25" style="background-image:radial-gradient(circle at 15% 25%,var(--brand-accent) 0,transparent 35%),radial-gradient(circle at 85% 75%,var(--brand-primary) 0,transparent 45%)"></div><div class="absolute inset-0 opacity-[0.06]" style="background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px"></div></>}
+    <svg class="absolute bottom-0 inset-x-0 w-full text-white/[0.06]" viewBox="0 0 1440 200" preserveAspectRatio="none" fill="currentColor"><path d="M0 120c240-60 480-60 720 0s480 60 720 0v80H0z" /><path d="M0 150c240-40 480-40 720 0s480 40 720 0v50H0z" /></svg>
+    <div class="relative max-w-6xl mx-auto px-5 py-24 md:py-32 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-12 items-center">
+      <div>
+        {t.hero.badge && <span class="inline-block text-xs font-medium bg-white/10 border border-white/15 rounded-full px-3 py-1 mb-6">{t.hero.badge}</span>}
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-5">{t.hero.title}</h1>
+        <p class="text-white/75 text-lg leading-relaxed mb-8">{t.hero.text}</p>
+        <div class="flex flex-wrap gap-3">
+          <a href={`${home}#contact`} class="bg-accent text-dark font-bold px-6 py-3 rounded-lg hover:brightness-110 transition">{t.hero.cta}</a>
+          <a href={`${home}#services`} class="border border-white/30 px-6 py-3 rounded-lg hover:bg-white/10 transition">{t.hero.cta2}</a>
+        </div>
+      </div>
+      {showStats && t.stats.length >= 2 ? (
+        <div class="hidden md:grid grid-cols-2 gap-4">
+          <div class="aspect-[3/4] rounded-2xl bg-gradient-to-br from-primary to-dark border border-white/10 p-6 flex items-end">
+            <svg viewBox="0 0 120 160" class="w-full text-white/30" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="20" y="30" width="80" height="130" /><path d="M20 30L60 5l40 25" /><path d="M35 50h15v15H35zM70 50h15v15H70zM35 80h15v15H35zM70 80h15v15H70zM35 110h15v15H35zM70 110h15v15H70zM50 140h20v20H50z" /></svg>
+          </div>
+          <div class="flex flex-col gap-4 pt-10">
+            <div class="rounded-2xl bg-accent/90 text-dark p-5"><div class="text-3xl font-bold">{t.stats[0].value}</div><div class="text-sm font-medium">{t.stats[0].label}</div></div>
+            <div class="rounded-2xl bg-white/10 border border-white/15 p-5 flex-1 flex flex-col justify-end"><div class="text-3xl font-bold">{t.stats.at(-1).value}</div><div class="text-sm text-white/70">{t.stats.at(-1).label}</div></div>
+          </div>
+        </div>
+      ) : s.logo && (
+        <div class="hidden md:flex justify-center">
+          <div class="relative w-80 h-80">
+            <div class="absolute inset-0 rounded-full border border-white/10"></div>
+            <div class="absolute inset-6 rounded-full border border-white/10"></div>
+            <div class="absolute inset-12 rounded-full bg-white shadow-2xl shadow-black/30 overflow-hidden">
+              <img src={img(s.logo)} alt={name} class="absolute inset-[18%] w-[64%] h-[64%] object-contain" />
+            </div>
+            {t.services.items.slice(0, 3).map((x: any, i: number) => (
+              <div class={`absolute w-14 h-14 rounded-2xl bg-white/10 backdrop-blur border border-white/20 grid place-items-center ${['top-2 start-2', 'top-1/2 -end-4 -translate-y-1/2', 'bottom-2 start-8'][i]}`}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent"><path d={icons[x.icon] ?? icons.building} /></svg>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>

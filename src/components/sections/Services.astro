@@ -1,0 +1,118 @@
+---
+import { s, on, content, nameOf, homeOf, img, icons, social, fallbackFor, initials, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const home = homeOf(lang);
+
+---
+{t.services.items.length > 0 && (
+  <section id="services" class="bg-slate-50 py-24 overflow-x-clip">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+        <div class="max-w-2xl">
+          <span class="text-xs font-bold tracking-[0.2em] uppercase text-slate-500">{t.services.eyebrow}</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-dark leading-snug mt-3 mb-4">{t.services.title}</h2>
+          {t.services.intro && <p class="leading-loose text-slate-500">{t.services.intro}</p>}
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <button type="button" data-slide="-1" aria-label="prev" class="w-12 h-12 rounded-full border border-slate-300 grid place-items-center text-dark hover:bg-dark hover:text-white hover:border-dark transition">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M15 6l-6 6 6 6" /></svg>
+          </button>
+          <button type="button" data-slide="1" aria-label="next" class="w-12 h-12 rounded-full bg-dark text-white grid place-items-center hover:bg-primary transition">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M9 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="md:[margin-inline-end:calc(50%-50vw)] -mx-5 md:mx-0">
+        <div id="svc-track" class="flex gap-1 overflow-x-auto scroll-smooth px-5 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {t.services.items.map((x: any, i: number) => {
+            const [first, ...rest] = x.title.split(' ');
+            const im = img(x.image) || `/services/${fallbackFor[x.icon] ?? 'projects'}.svg`;
+            const fb = `/services/${fallbackFor[x.icon] ?? 'projects'}.svg`;
+            return (
+              <div class="svc-panel" data-panel={i} data-active={i === 0 ? '' : undefined} role="button" tabindex="0" aria-expanded={i === 0 ? 'true' : 'false'} aria-label={x.title}>
+                <img src={im} alt="" loading="lazy" referrerpolicy="no-referrer" onerror={`this.onerror=null;this.src='${fb}'`} class="svc-img" />
+                <div class="svc-shade"></div>
+                <span class="absolute top-4 start-4 z-10 text-xs font-bold text-white/70 tabular-nums" dir="ltr">{String(i + 1).padStart(2, '0')}</span>
+                <div class="svc-label">
+                  <span class="text-2xl font-bold leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,.5)]"><span class="text-accent">{first}</span> <span class="text-white">{rest.join(' ')}</span></span>
+                  <span class="mt-4 w-9 h-9 rounded-full bg-white/15 backdrop-blur border border-white/25 grid place-items-center text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg></span>
+                </div>
+                <div class="svc-body">
+                  <div class="svc-inner">
+                    <div class="w-12 h-12 rounded-2xl grid place-items-center text-white shadow-lg mb-5" style="background:linear-gradient(135deg,var(--brand-accent),var(--brand-primary))">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d={icons[x.icon] ?? icons.building} /></svg>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-bold leading-snug mb-3"><span class="text-accent">{first}</span> <span class="text-white">{rest.join(' ')}</span></h3>
+                    <p class="text-white/80 leading-relaxed mb-5">{x.text}</p>
+                    {(x.details ?? []).length > 0 && (
+                      <ul class="space-y-2 mb-6">
+                        {x.details.map((d: any) => <li class="flex items-start gap-2.5 text-sm text-white/90"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-accent/25 text-accent grid place-items-center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M5 12l5 5L20 7" /></svg></span>{d.text}</li>)}
+                      </ul>
+                    )}
+                    {on('service_pages') && x.slug && <a href={`${home}services/${x.slug}/`} class="inline-flex items-center gap-2 rounded-full border border-white/40 px-5 py-2.5 text-sm font-bold text-white hover:bg-white/10 transition me-2">{t.services.view}</a>}
+                    {t.services.more && <a href={`${home}#contact`} class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-dark hover:bg-accent transition">{t.services.more}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>}
+                  </div>
+                </div>
+                <div class="svc-progress"><span></span></div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+  )}
+
+
+  <script is:inline>
+    (function () {
+      var track = document.getElementById('svc-track');
+      if (!track) return;
+      var panels = [].slice.call(track.querySelectorAll('[data-panel]'));
+      var rtl = document.documentElement.dir === 'rtl';
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var DURATION = 6000, current = 0, timer = null, hovered = false, visible = false;
+      track.style.setProperty('--svc-duration', DURATION + 'ms');
+      function reveal(panel) {
+        var tr = track.getBoundingClientRect(), pr = panel.getBoundingClientRect(), pad = 20;
+        var delta = rtl ? pr.right - tr.right + pad : pr.left - tr.left - pad;
+        if (Math.abs(delta) > 2) track.scrollBy({ left: delta, behavior: 'smooth' });
+      }
+      function activate(n, user) {
+        current = (n + panels.length) % panels.length;
+        panels.forEach(function (p, i) {
+          var on = i === current;
+          p.toggleAttribute('data-active', on);
+          p.setAttribute('aria-expanded', on ? 'true' : 'false');
+          var bar = p.querySelector('.svc-progress span');
+          bar.style.animation = 'none';
+          void bar.offsetWidth;
+          bar.style.animation = '';
+        });
+        setTimeout(function () { reveal(panels[current]); }, 720);
+        if (user) restart();
+      }
+      function running() { return !reduce && visible && !hovered; }
+      function restart() {
+        clearInterval(timer);
+        track.classList.toggle('svc-paused', !running());
+        if (running()) timer = setInterval(function () { activate(current + 1); }, DURATION);
+      }
+      panels.forEach(function (p, i) {
+        p.addEventListener('click', function (e) { if (e.target.closest('a')) return; if (i !== current) activate(i, true); });
+        p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(i, true); } });
+      });
+      document.querySelectorAll('[data-slide]').forEach(function (b) {
+        b.addEventListener('click', function () { activate(current + Number(b.dataset.slide), true); });
+      });
+      track.addEventListener('mouseenter', function () { hovered = true; restart(); });
+      track.addEventListener('mouseleave', function () { hovered = false; activate(current, true); });
+      track.addEventListener('focusin', function () { hovered = true; restart(); });
+      track.addEventListener('focusout', function () { hovered = false; restart(); });
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; restart(); }, { threshold: 0.35 }).observe(track);
+    })();
+  </script>

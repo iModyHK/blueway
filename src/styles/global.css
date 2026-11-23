@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/700.css";
+
+@theme {
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --color-primary: var(--brand-primary);
+  --color-accent: var(--brand-accent);
+  --color-dark: var(--brand-dark);
+}
+
+html { scroll-behavior: smooth; }
+
+.svc-panel { position: relative; flex-shrink: 0; height: 470px; width: 46vw; overflow: hidden; background: var(--brand-dark); cursor: pointer; outline: none; transition: width .7s cubic-bezier(.2,.8,.2,1); }
+.svc-panel[data-active] { width: 86vw; cursor: default; }
+@media (min-width: 640px) { .svc-panel { width: 210px; } .svc-panel[data-active] { width: 540px; } }
+.svc-panel:focus-visible { box-shadow: inset 0 0 0 4px var(--brand-accent); }
+.svc-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+.svc-panel:hover .svc-img, .svc-panel[data-active] .svc-img { transform: scale(1.06); }
+.svc-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgb(11 26 74 / .85), rgb(11 26 74 / .45) 55%, rgb(11 26 74 / .3)); transition: background .7s; }
+.svc-panel[data-active] .svc-shade { background: linear-gradient(to top, rgb(11 26 74 / .97) 15%, rgb(11 26 74 / .75) 55%, rgb(11 26 74 / .25)); }
+.svc-label { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 1rem; text-align: center; transition: opacity .35s; }
+.svc-panel[data-active] .svc-label { opacity: 0; pointer-events: none; }
+.svc-body { position: absolute; inset: 0; z-index: 2; display: flex; align-items: flex-end; padding: 1.75rem; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity .3s, transform .3s; }
+.svc-panel[data-active] .svc-body { opacity: 1; transform: none; pointer-events: auto; transition: opacity .5s .35s, transform .5s .35s; }
+.svc-inner { width: calc(86vw - 3.5rem); }
+@media (min-width: 640px) { .svc-inner { width: calc(540px - 3.5rem); } }
+.svc-progress { position: absolute; inset-inline: 0; bottom: 0; z-index: 3; height: 3px; background: rgb(255 255 255 / .12); opacity: 0; transition: opacity .3s; }
+.svc-panel[data-active] .svc-progress { opacity: 1; }
+.svc-progress span { display: block; height: 100%; width: 0; background: var(--brand-accent); }
+.svc-panel[data-active] .svc-progress span { animation: svc-fill var(--svc-duration, 6s) linear forwards; }
+.svc-paused .svc-progress span { animation-play-state: paused !important; }
+@keyframes svc-fill { to { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .svc-panel, .svc-img, .svc-body { transition: none !important; } .svc-progress { display: none; } }
+.pj-chip { border-radius: 9999px; border: 1px solid rgb(203 213 225); padding: .4rem 1rem; font-size: .875rem; font-weight: 700; color: var(--brand-dark); transition: all .2s; }
+.pj-chip:hover { border-color: var(--brand-primary); }
+.pj-chip[data-on] { background: var(--brand-dark); border-color: var(--brand-dark); color: #fff; }
+.prose { line-height: 2; color: rgb(51 65 85); }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { font-size: 1.6rem; font-weight: 700; color: var(--brand-dark); margin-top: 1.8em; line-height: 1.4; }
+.prose h3 { font-size: 1.25rem; font-weight: 700; color: var(--brand-dark); margin-top: 1.5em; }
+.prose a { color: var(--brand-primary); text-decoration: underline; text-underline-offset: 3px; }
+.prose ul { list-style: disc; padding-inline-start: 1.4em; }
+.prose ol { list-style: decimal; padding-inline-start: 1.4em; }
+.prose img { border-radius: 1.25rem; }
+.prose blockquote { border-inline-start: 4px solid var(--brand-accent); padding-inline-start: 1em; color: rgb(71 85 105); }

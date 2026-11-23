@@ -1,0 +1,208 @@
+{
+  "seo": {
+    "title": "Blue Way | Technical & industrial contracting · Telecom & power",
+    "description": "A Saudi establishment specialised in technical and industrial contracting, telecom and power services, maintenance and operation of equipment and electrical generators, and industrial oil supply.",
+    "keywords": ""
+  },
+  "tagline": "Technical & industrial contracting · Telecom & power",
+  "nav": {
+    "contact": "Contact",
+    "clients": "Partners",
+    "about": "About",
+    "news": "News",
+    "testimonials": "",
+    "faq": "FAQ",
+    "projects": "Projects",
+    "map": "",
+    "certificates": "Certificates",
+    "services": "Services",
+    "stats": ""
+  },
+  "hero": {
+    "badge": "Your field partner in telecom and power",
+    "title": "Integrated technical solutions for telecom and power",
+    "text": "A Saudi establishment specialised in technical and industrial contracting, telecom and power services, maintenance and operation of equipment and electrical generators, and industrial oil supply.",
+    "cta": "Contact us",
+    "cta2": "Explore our services",
+    "image": ""
+  },
+  "stats": [],
+  "about": {
+    "eyebrow": "About us",
+    "title": "About us",
+    "text": "Blue Way is a Saudi establishment based in Al-Masane district, Riyadh, delivering technical and field services across telecom and power — from maintaining and operating electrical generators and telecom tower fuel tanks, to laying telecom and fiber optic cables, and supplying industrial oils.\n\nTechnical and field works for telecom companies' projects\nGenerator maintenance, operation and inspection\nTelecom and fiber optic cable installation\nIndustrial oil supply and sales",
+    "since": "Since",
+    "image": "",
+    "points": []
+  },
+  "services": {
+    "eyebrow": "Our services",
+    "title": "Our services",
+    "items": [
+      {
+        "body": "",
+        "details": [],
+        "slug": "electrical-generators",
+        "text": "Maintenance, operation and inspection of electrical generators to keep power running.",
+        "seo_title": "",
+        "title": "Electrical generators",
+        "icon": "bolt",
+        "seo_description": "",
+        "image": ""
+      },
+      {
+        "body": "",
+        "details": [],
+        "slug": "telecom-fiber-optics",
+        "text": "Laying telecom and fiber optic cables and carrying out the related technical works.",
+        "seo_title": "",
+        "title": "Telecom & fiber optics",
+        "icon": "cable",
+        "seo_description": "",
+        "image": ""
+      },
+      {
+        "body": "",
+        "details": [],
+        "slug": "telecom-towers",
+        "text": "Maintenance and operation of generator fuel tanks at telecom tower sites.",
+        "seo_title": "",
+        "title": "Telecom towers",
+        "icon": "tower",
+        "seo_description": "",
+        "image": ""
+      },
+      {
+        "body": "",
+        "details": [],
+        "slug": "industrial-oils",
+        "text": "Supply, sales and trading of industrial oils for facilities and equipment.",
+        "seo_title": "",
+        "title": "Industrial oils",
+        "icon": "drop",
+        "seo_description": "",
+        "image": ""
+      },
+      {
+        "body": "",
+        "details": [],
+        "slug": "telecom-projects",
+        "text": "Technical and field works for telecom companies' projects.",
+        "seo_title": "",
+        "title": "Telecom projects",
+        "icon": "tool",
+        "seo_description": "",
+        "image": ""
+      }
+    ],
+    "more": "Request service",
+    "intro": "",
+    "view": "Details",
+    "details_title": "What's included",
+    "other_title": "Other services"
+  },
+  "projects": {
+    "eyebrow": "Our work",
+    "title": "Field projects",
+    "intro": "",
+    "all": "All",
+    "items": []
+  },
+  "certificates": {
+    "eyebrow": "Credentials",
+    "title": "Licenses & certificates",
+    "view": "View",
+    "items": []
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "What our clients say",
+    "items": []
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked questions",
+    "intro": "",
+    "items": []
+  },
+  "news": {
+    "eyebrow": "News",
+    "title": "Latest news & updates",
+    "all": "All news",
+    "more": "More news",
+    "empty": "No news yet."
+  },
+  "blocks": {
+    "items": []
+  },
+  "clients": {
+    "eyebrow": "Our partners",
+    "title": "Companies we have worked with",
+    "items": []
+  },
+  "map": {
+    "eyebrow": "Find us",
+    "title": "Visit us in Riyadh",
+    "open": "Open in Google Maps"
+  },
+  "contact": {
+    "service_other": "Other",
+    "send": "Send",
+    "eyebrow": "Get in touch",
+    "text": "Send us your request details and we will get back to you shortly.",
+    "too_large": "Files are too large (10 MB max).",
+    "whatsapp": "Send via WhatsApp",
+    "address": "Al-Masane District",
+    "title": "Contact us",
+    "sent": "Your message has been sent. Thank you.",
+    "fields": [
+      {
+        "name": "name",
+        "label": "Name",
+        "type": "text",
+        "required": true,
+        "half": false,
+        "options": []
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "required": true,
+        "half": true,
+        "options": []
+      },
+      {
+        "name": "phone",
+        "label": "Mobile",
+        "type": "tel",
+        "required": false,
+        "half": true,
+        "options": []
+      },
+      {
+        "name": "message",
+        "label": "Your message",
+        "type": "textarea",
+        "required": true,
+        "half": false,
+        "options": []
+      }
+    ],
+    "captcha": "Please complete the verification.",
+    "sending": "Sending...",
+    "failed": "Sending failed, please try again.",
+    "form_title": "Contact us"
+  },
+  "profile": {
+    "button": "Company profile PDF",
+    "title": "Company Profile",
+    "print": "Print / Save as PDF",
+    "contact": "Contact"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "cr": "CR",
+    "credit": "Designed & developed by"
+  }
+}

@@ -1,0 +1,104 @@
+---
+import { s, on, content, icons, social, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang; preselect?: string }
+const { lang, preselect = '' } = Astro.props;
+const t = content(lang);
+const c = t.contact;
+const fields: any[] = (c.fields ?? []).filter((f: any) => f.name && f.type);
+const services: string[] = (t.services?.items ?? []).map((x: any) => x.title);
+const inputCls = 'w-full min-w-0 border border-slate-200 rounded-lg px-4 py-3 bg-white focus:outline-none focus:border-primary';
+const options = (f: any) => (f.type === 'services' ? [...services, ...(c.service_other ? [c.service_other] : [])] : (f.options ?? []).map((o: any) => o.text));
+const hasFile = fields.some((f) => f.type === 'file');
+---
+<section id="contact" class="bg-dark text-white py-24">
+  <div class="max-w-6xl mx-auto px-5 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-12">
+    <div>
+      <span class="text-accent font-bold text-sm">{c.eyebrow}</span>
+      <h2 class="text-3xl font-bold mt-2 mb-4">{c.title}</h2>
+      <p class="text-white/70 mb-8 leading-relaxed">{c.text}</p>
+      <div class="space-y-4 text-white/85">
+        {s.email && <a href={`mailto:${s.email}`} class="flex gap-3 items-center hover:text-white"><span class="w-10 h-10 rounded-lg bg-white/10 grid place-items-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d={icons.mail} /></svg></span><span dir="ltr">{s.email}</span></a>}
+        {s.phone && <a href={phoneHref()} class="flex gap-3 items-center hover:text-white"><span class="w-10 h-10 rounded-lg bg-white/10 grid place-items-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d={icons.phone} /></svg></span><span dir="ltr">{s.phone}</span></a>}
+        {c.address && <div class="flex gap-3 items-center"><span class="w-10 h-10 rounded-lg bg-white/10 grid place-items-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d={icons.pin} /></svg></span><span>{c.address}</span></div>}
+      </div>
+    </div>
+    <form id="contact-form" action="/contact.php" method="post" enctype={hasFile ? 'multipart/form-data' : undefined} novalidate class="bg-white text-slate-700 rounded-2xl p-7 grid grid-cols-1 sm:grid-cols-2 gap-4" data-ok={c.sent} data-fail={c.failed} data-sending={c.sending} data-large={c.too_large} data-captcha={c.captcha}>
+      {c.form_title && <h3 class="sm:col-span-2 text-xl font-bold text-dark">{c.form_title}</h3>}
+      <div id="form-status" role="status" class="hidden sm:col-span-2 rounded-lg px-4 py-3 text-sm font-medium"></div>
+      <input type="hidden" name="lang" value={lang} />
+      {fields.map((f) => {
+        const span = f.half ? '' : 'sm:col-span-2';
+        const label = f.label + (f.required ? ' *' : '');
+        const id = `f-${f.name}`;
+        if (f.type === 'textarea') return <textarea id={id} name={f.name} rows="4" required={f.required} placeholder={label} aria-label={f.label} class={`${inputCls} ${span}`}></textarea>;
+        if (f.type === 'select' || f.type === 'services') return (
+          <select id={id} name={f.name} required={f.required} aria-label={f.label} class={`${inputCls} ${span}`}>
+            <option value="">{label}</option>
+            {options(f).map((o: string) => <option selected={f.type === 'services' && o === preselect}>{o}</option>)}
+          </select>
+        );
+        if (f.type === 'file') return (
+          <label class={`block rounded-lg border border-dashed border-slate-300 px-4 py-3 text-sm text-slate-500 cursor-pointer hover:border-primary ${span}`}>
+            <span class="flex items-center gap-2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.4 11.1l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5" /></svg>{label}</span>
+            <input type="file" name={`${f.name}[]`} multiple accept="image/jpeg,image/png,image/webp,application/pdf" required={f.required} class="mt-2 block w-full text-xs file:me-3 file:rounded-full file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:text-primary file:font-bold" />
+          </label>
+        );
+        if (f.type === 'date') return <input id={id} name={f.name} type="date" required={f.required} aria-label={f.label} title={f.label} class={`${inputCls} ${span}`} />;
+        const type = ({ email: 'email', tel: 'tel', number: 'number' } as Record<string, string>)[f.type] ?? 'text';
+        const ac = ({ email: 'email', tel: 'tel' } as Record<string, string>)[f.type];
+        return <input id={id} name={f.name} type={type} required={f.required} autocomplete={ac} placeholder={label} aria-label={f.label} class={`${inputCls} ${span}`} />;
+      })}
+      <input name="website" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      {s.turnstile_site_key && <div class="cf-turnstile sm:col-span-2" data-sitekey={s.turnstile_site_key} data-language={lang}></div>}
+      <div class="sm:col-span-2 grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 gap-3">
+        <button class="bg-primary text-white font-bold py-3 rounded-lg hover:brightness-110 transition disabled:opacity-60">{c.send}</button>
+        {on('whatsapp') && s.whatsapp && c.whatsapp && <button type="button" id="wa-send" data-wa={s.whatsapp} class="inline-flex items-center justify-center gap-2 bg-[#25d366] text-white font-bold py-3 rounded-lg hover:brightness-105 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d={social.whatsapp} /></svg>{c.whatsapp}</button>}
+      </div>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var f = document.getElementById('contact-form');
+    if (!f) return;
+    var st = document.getElementById('form-status');
+    var btn = f.querySelector('button:not([type])');
+    function show(msg, ok) {
+      st.textContent = msg;
+      st.className = 'sm:col-span-2 rounded-lg px-4 py-3 text-sm font-medium ' + (ok === true ? 'bg-emerald-50 text-emerald-700' : ok === false ? 'bg-red-50 text-red-700' : 'bg-slate-100 text-slate-600');
+    }
+    var q = new URLSearchParams(location.search).get('sent');
+    if (q !== null) show(q === '1' ? f.dataset.ok : f.dataset.fail, q === '1');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!f.reportValidity()) return;
+      var count = 0, total = 0;
+      f.querySelectorAll('input[type=file]').forEach(function (i) { for (var k = 0; k < i.files.length; k++) { count++; total += i.files[k].size; } });
+      if (count > 5 || total > 10 * 1024 * 1024) { show(f.dataset.large, false); return; }
+      var tk = f.querySelector('[name="cf-turnstile-response"]');
+      if (f.querySelector('.cf-turnstile') && (!tk || !tk.value)) { show(f.dataset.captcha, false); return; }
+      btn.disabled = true;
+      show(f.dataset.sending);
+      fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+        .then(function (d) {
+          show(d.ok ? f.dataset.ok : (d.message || f.dataset.fail), !!d.ok);
+          if (d.ok) f.reset();
+          if (window.turnstile) window.turnstile.reset();
+        })
+        .catch(function () { show(f.dataset.fail, false); })
+        .finally(function () { btn.disabled = false; });
+    });
+    var wa = document.getElementById('wa-send');
+    if (wa) wa.addEventListener('click', function () {
+      var lines = [];
+      f.querySelectorAll('input:not([type=hidden]):not([type=file]):not([name=website]), select, textarea').forEach(function (el) {
+        if (!el.value) return;
+        lines.push((el.getAttribute('aria-label') || el.name) + ': ' + el.value);
+      });
+      window.open('https://wa.me/' + wa.dataset.wa + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+    });
+  })();
+</script>

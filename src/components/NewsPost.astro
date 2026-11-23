@@ -1,0 +1,36 @@
+---
+import Layout from './Layout.astro';
+import NewsCard from './NewsCard.astro';
+import { content, nameOf, homeOf, img, abs, siteUrl, type Lang } from '../lib/site';
+import { posts, field, html, fmtDate } from '../lib/news';
+
+interface Props { lang: Lang; slug: string }
+const { lang, slug } = Astro.props;
+const t = content(lang);
+const home = homeOf(lang);
+const all = posts();
+const p = all.find((x) => x.slug === slug);
+const title = field(p, 'title', lang);
+const excerpt = field(p, 'excerpt', lang);
+const more = all.filter((x) => x.slug !== slug).slice(0, 3);
+const ld = { '@context': 'https://schema.org', '@type': 'NewsArticle', headline: title, datePublished: p.date, image: p.image && siteUrl() ? [abs(img(p.image))] : undefined, publisher: { '@type': 'Organization', name: nameOf(lang) } };
+---
+<Layout lang={lang} path={`${home}news/${slug}/`} altPath={`${homeOf(lang === 'ar' ? 'en' : 'ar')}news/${slug}/`} title={`${title} | ${nameOf(lang)}`} description={excerpt}>
+  <article class="max-w-3xl mx-auto px-5 py-16">
+    <nav class="text-sm text-slate-500 mb-6" aria-label="breadcrumb"><a href={home} class="hover:text-primary">{nameOf(lang)}</a> <span class="mx-2">/</span> <a href={`${home}news/`} class="hover:text-primary">{t.news.title}</a></nav>
+    <time datetime={p.date} class="text-sm font-bold text-primary">{fmtDate(p.date, lang)}</time>
+    <h1 class="mt-2 text-3xl md:text-4xl font-bold leading-tight text-dark">{title}</h1>
+    {excerpt && <p class="mt-4 text-lg leading-relaxed text-slate-500">{excerpt}</p>}
+    {p.image && <img src={img(p.image)} alt={title} referrerpolicy="no-referrer" class="mt-8 w-full rounded-3xl object-cover aspect-[16/9] bg-slate-100" />}
+    <div class="prose mt-10" set:html={html(field(p, 'body', lang))} />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </article>
+  {more.length > 0 && (
+    <section class="bg-slate-50 py-16">
+      <div class="max-w-6xl mx-auto px-5">
+        <h2 class="text-2xl font-bold text-dark mb-8">{t.news.more}</h2>
+        <div class="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 lg:grid-cols-3 gap-5">{more.map((x) => <NewsCard lang={lang} post={x} />)}</div>
+      </div>
+    </section>
+  )}
+</Layout>

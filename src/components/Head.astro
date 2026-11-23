@@ -1,0 +1,65 @@
+---
+import { s, content, nameOf, abs, siteUrl, img, type Lang } from '../lib/site';
+
+interface Props { lang: Lang; path: string; altPath: string; title?: string; description?: string; noindex?: boolean; ld?: boolean }
+const { lang, path, altPath, title, description: desc, noindex, ld: withLd = true } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const pageTitle = title ?? (t.seo?.title || `${name} | ${t.tagline}`);
+const description = desc || t.seo?.description || t.hero.text;
+const hasSite = !!siteUrl() && !/example\.com/.test(siteUrl());
+const og = s.og_image && hasSite ? abs(img(s.og_image)) : '';
+const arPath = lang === 'ar' ? path : altPath;
+const enPath = lang === 'en' ? path : altPath;
+const a = s.analytics ?? {};
+const sameAs = (s.social ?? []).map((x: any) => x.url).filter(Boolean);
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name,
+  alternateName: lang === 'ar' ? s.name_en : s.name_ar,
+  description,
+  url: hasSite ? abs(path) : undefined,
+  logo: s.logo && hasSite ? abs(img(s.logo)) : undefined,
+  image: og || undefined,
+  email: s.email || undefined,
+  telephone: s.phone_intl || s.phone || undefined,
+  address: { '@type': 'PostalAddress', streetAddress: t.contact.address, addressLocality: s.city || undefined, addressCountry: s.country || undefined },
+  geo: s.geo_lat && s.geo_lng ? { '@type': 'GeoCoordinates', latitude: Number(s.geo_lat), longitude: Number(s.geo_lng) } : undefined,
+  areaServed: s.country || undefined,
+  sameAs: sameAs.length ? sameAs : undefined,
+  makesOffer: (t.services?.items ?? []).map((x: any) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title, description: x.text } })),
+};
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+{t.seo?.keywords && <meta name="keywords" content={t.seo.keywords} />}
+{noindex && <meta name="robots" content="noindex" />}
+<meta name="theme-color" content={s.dark} />
+{hasSite && <link rel="canonical" href={abs(path)} />}
+{hasSite && <link rel="alternate" hreflang="ar" href={abs(arPath)} />}
+{hasSite && <link rel="alternate" hreflang="en" href={abs(enPath)} />}
+{hasSite && <link rel="alternate" hreflang="x-default" href={abs(arPath)} />}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:locale" content={lang === 'ar' ? 'ar_SA' : 'en_US'} />
+{hasSite && <meta property="og:url" content={abs(path)} />}
+{og && <meta property="og:image" content={og} />}
+{og && <meta property="og:image:width" content="1200" />}
+{og && <meta property="og:image:height" content="630" />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+{og && <meta name="twitter:image" content={og} />}
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/favicon.png" />
+<style set:html={`:root{--brand-primary:${s.primary};--brand-accent:${s.accent};--brand-dark:${s.dark}}`}></style>
+{withLd && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+{a.provider === 'umami' && a.src && a.id && <script defer src={a.src} data-website-id={a.id}></script>}
+{a.provider === 'plausible' && a.src && a.id && <script defer data-domain={a.id} src={a.src}></script>}
+{a.provider === 'ga4' && a.id && <script async src={`https://www.googletagmanager.com/gtag/js?id=${a.id}`}></script>}
+{a.provider === 'ga4' && a.id && <script is:inline define:vars={{ id: a.id }}>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',id);</script>}

@@ -1,0 +1,37 @@
+---
+import { img, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang; block: any }
+const { block: b } = Astro.props;
+const link = b.button_link || '';
+const external = /^https?:/.test(link);
+---
+{b.style === 'cta' ? (
+  <section class="max-w-6xl mx-auto px-5 py-12">
+    <div class="relative overflow-hidden rounded-3xl p-10 md:p-14 text-white" style="background:linear-gradient(135deg,var(--brand-dark),var(--brand-primary))">
+      {b.image && <img src={img(b.image)} alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-20" />}
+      <div class="absolute -top-20 -end-20 w-72 h-72 rounded-full opacity-25" style="background:radial-gradient(var(--brand-accent),transparent 65%)"></div>
+      <div class="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div class="max-w-2xl">
+          <h2 class="text-2xl md:text-3xl font-bold leading-snug">{b.title}</h2>
+          {b.text && <p class="mt-3 text-white/80 leading-relaxed whitespace-pre-line">{b.text}</p>}
+        </div>
+        {b.button_label && link && <a href={link} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} class="shrink-0 self-start md:self-auto inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-bold text-dark hover:brightness-110 transition">{b.button_label}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>}
+      </div>
+    </div>
+  </section>
+) : (
+  <section class="max-w-6xl mx-auto px-5 py-20 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-12 items-center">
+    {b.image && (
+      <div class={`relative aspect-[4/3] overflow-hidden rounded-3xl bg-slate-100 ${b.image_side === 'end' ? 'md:order-2' : ''}`}>
+        <img src={img(b.image)} alt={b.title} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+      </div>
+    )}
+    <div class={b.image ? '' : 'md:col-span-2 max-w-3xl'}>
+      {b.eyebrow && <span class="text-primary font-bold text-sm">{b.eyebrow}</span>}
+      <h2 class="text-3xl font-bold text-dark mt-2 mb-5">{b.title}</h2>
+      {b.text && <p class="leading-loose whitespace-pre-line">{b.text}</p>}
+      {b.button_label && link && <a href={link} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} class="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-bold text-white hover:brightness-110 transition">{b.button_label}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>}
+    </div>
+  </section>
+)}

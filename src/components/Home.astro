@@ -1,0 +1,38 @@
+---
+import Layout from './Layout.astro';
+import Hero from './sections/Hero.astro';
+import Stats from './sections/Stats.astro';
+import About from './sections/About.astro';
+import Services from './sections/Services.astro';
+import Projects from './sections/Projects.astro';
+import Certificates from './sections/Certificates.astro';
+import Clients from './sections/Clients.astro';
+import Testimonials from './sections/Testimonials.astro';
+import Faq from './sections/Faq.astro';
+import News from './sections/News.astro';
+import Map from './sections/Map.astro';
+import Contact from './sections/Contact.astro';
+import Block from './sections/Block.astro';
+import { content, homeOf, sectionOrder, on, type Lang } from '../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const components: Record<string, any> = { stats: Stats, about: About, services: Services, projects: Projects, certificates: Certificates, clients: Clients, testimonials: Testimonials, faq: Faq, news: News, map: Map, contact: Contact };
+const blocks: any[] = on('blocks') ? t.blocks?.items ?? [] : [];
+const blocksAfter = (key: string) => blocks.filter((b) => (b.after || 'about') === key);
+const order = sectionOrder();
+---
+<Layout lang={lang} path={homeOf(lang)} altPath={lang === 'ar' ? '/en/' : '/'} isHome>
+  <Hero lang={lang} />
+  {blocksAfter('hero').map((b) => <Block lang={lang} block={b} />)}
+  {order.map((key) => {
+    const C = components[key];
+    return (
+      <>
+        {C && on(key) && <C lang={lang} />}
+        {blocksAfter(key).map((b) => <Block lang={lang} block={b} />)}
+      </>
+    );
+  })}
+</Layout>

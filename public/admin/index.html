@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>لوحة التحكم</title>
+  <style>
+    input, textarea { unicode-bidi: plaintext; text-align: start; }
+    #guide-link { position: fixed; bottom: 18px; left: 18px; z-index: 9999; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: #0b1a4a; color: #fff; font: 600 14px/1 system-ui, sans-serif; text-decoration: none; box-shadow: 0 8px 24px rgb(0 0 0 / .2); }
+    #guide-link:hover { background: #1e56a8; }
+    [class*="StyledAuthenticationPage"] [class*="CustomIconWrapper"] img { max-width: 300px; max-height: 170px; object-fit: contain; }
+    [class*="LoginButtonIcon"], [class*="NetlifyCreditIcon"] { display: none !important; }
+    [class*="LoginButton-button"] { background: #1e56a8 !important; color: #fff !important; padding: 0 28px !important; height: 44px !important; border-radius: 10px !important; font-size: 15px !important; margin-top: 28px !important; }
+  </style>
+</head>
+<body>
+  <a id="guide-link" href="/admin/guide.html" target="_blank" rel="noopener">؟ دليل الاستخدام</a>
+  <script src="/admin/decap-cms.js"></script>
+  <script src="/admin/ar.js"></script>
+  <script id="login-fix">
+    new MutationObserver(() => {
+      document.querySelectorAll('button').forEach((b) => {
+        if (b.dataset.lf || !/تسجيل الدخول|Login/i.test(b.textContent)) return;
+        b.dataset.lf = 1;
+        b.querySelectorAll('svg').forEach((x) => x.remove());
+        b.lastChild.textContent = 'الدخول بالبريد وكلمة المرور';
+      });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  </script>
+</body>
+</html>

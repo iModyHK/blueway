@@ -1,0 +1,88 @@
+{
+  "name_ar": "بلو وي",
+  "name_en": "Blue Way",
+  "logo": "/brand/logo.png",
+  "logo_white": "/brand/logo-white.png",
+  "og_image": "/brand/og.jpg",
+  "primary": "#1d5cac",
+  "accent": "#83a5d1",
+  "dark": "#010c36",
+  "email": "info@bluewaysa.com",
+  "phone": "0530060014",
+  "phone_intl": "+966530060014",
+  "whatsapp": "966530060014",
+  "cr": "7030580513",
+  "founded": "",
+  "site_url": "https://bluewaysa.com",
+  "city": "Riyadh",
+  "country": "SA",
+  "map_query": "حي المصانع، الرياض",
+  "map_embed": "",
+  "geo_lat": "",
+  "geo_lng": "",
+  "social": [],
+  "turnstile_site_key": "",
+  "analytics": {
+    "provider": "none",
+    "src": "",
+    "id": ""
+  },
+  "sections": {
+    "stats": false,
+    "about": true,
+    "services": true,
+    "projects": false,
+    "certificates": false,
+    "clients": true,
+    "testimonials": false,
+    "faq": false,
+    "news": false,
+    "map": true,
+    "contact": true,
+    "service_pages": true,
+    "blocks": false,
+    "whatsapp": true,
+    "profile_download": true,
+    "lang_switch": true,
+    "credit": true
+  },
+  "section_order": [
+    {
+      "section": "stats"
+    },
+    {
+      "section": "about"
+    },
+    {
+      "section": "services"
+    },
+    {
+      "section": "projects"
+    },
+    {
+      "section": "certificates"
+    },
+    {
+      "section": "clients"
+    },
+    {
+      "section": "testimonials"
+    },
+    {
+      "section": "faq"
+    },
+    {
+      "section": "news"
+    },
+    {
+      "section": "map"
+    },
+    {
+      "section": "contact"
+    }
+  ],
+  "credit_name_ar": "جمعة الأعمال",
+  "credit_name_en": "Jumaat Alamal",
+  "credit_url": "https://j-a.sa",
+  "credit_logo": "/brand/jumaat-alamal-logo-white.svg"
+}

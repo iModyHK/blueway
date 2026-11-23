@@ -1,0 +1,30 @@
+---
+import { s, on, content, nameOf, homeOf, img, icons, social, fallbackFor, initials, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const home = homeOf(lang);
+
+---
+{(
+  <section id="about" class="max-w-6xl mx-auto px-5 py-24 grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-12 items-center">
+    <div class="aspect-[4/3] rounded-2xl bg-slate-100 relative overflow-hidden">
+      {t.about.image
+        ? <img src={img(t.about.image)} alt={t.about.title} class="absolute inset-0 w-full h-full object-cover" />
+        : s.logo_white
+          ? <><div class="absolute inset-0" style="background:linear-gradient(135deg,var(--brand-primary),var(--brand-dark))"></div><div class="absolute inset-0 opacity-[0.07]" style="background-image:radial-gradient(#fff 1px,transparent 1px);background-size:18px 18px"></div><img src={img(s.logo_white)} alt={name} class="absolute inset-0 m-auto h-3/4 w-auto" /></>
+          : <><div class="absolute inset-0" style="background:linear-gradient(135deg,var(--brand-primary),var(--brand-dark))"></div><svg viewBox="0 0 400 300" class="absolute inset-0 w-full h-full text-white/25" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 260h400" /><rect x="40" y="120" width="70" height="140" /><rect x="130" y="60" width="90" height="200" /><rect x="240" y="150" width="60" height="110" /><rect x="315" y="100" width="55" height="160" /></svg></>}
+      {s.founded && <div class="absolute bottom-5 start-5 bg-white rounded-xl px-4 py-3 shadow-lg"><div class="text-xs text-slate-500">{t.about.since}</div><div class="text-xl font-bold text-dark">{s.founded}</div></div>}
+    </div>
+    <div>
+      <span class="text-primary font-bold text-sm">{t.about.eyebrow}</span>
+      <h2 class="text-3xl font-bold text-dark mt-2 mb-5">{t.about.title}</h2>
+      <p class="leading-loose mb-6">{t.about.text}</p>
+      <ul class="space-y-3">
+        {t.about.points.map((p: any) => <li class="flex items-center gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-primary/10 text-primary grid place-items-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7" /></svg></span>{p.text}</li>)}
+      </ul>
+    </div>
+  </section>
+  )}

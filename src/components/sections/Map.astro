@@ -1,0 +1,26 @@
+---
+import { s, on, content, nameOf, homeOf, img, icons, social, fallbackFor, initials, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const home = homeOf(lang);
+const mapSrc = s.map_embed || (s.map_query ? `https://www.google.com/maps?q=${encodeURIComponent(s.map_query)}&output=embed` : '');
+const mapLink = s.map_query ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.map_query)}` : '';
+---
+{mapSrc && (
+    <section id="map" class="max-w-6xl mx-auto px-5 py-24">
+      <div class="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-6 items-stretch">
+        <div class="rounded-3xl bg-dark text-white p-8 flex flex-col justify-center">
+          <span class="text-accent font-bold text-sm">{t.map.eyebrow}</span>
+          <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4">{t.map.title}</h2>
+          <div class="flex items-start gap-3 text-white/80 mb-8"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mt-0.5 shrink-0 text-accent"><path d={icons.pin} /></svg>{t.contact.address}</div>
+          {mapLink && <a href={mapLink} target="_blank" rel="noopener" class="self-start inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-dark hover:bg-accent transition">{t.map.open}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="rtl:rotate-180"><path d="M7 17L17 7M9 7h8v8" /></svg></a>}
+        </div>
+        <div class="relative min-h-80 overflow-hidden rounded-3xl ring-1 ring-slate-200 bg-slate-100">
+          <iframe src={mapSrc} title={t.map.title} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen class="absolute inset-0 h-full w-full border-0"></iframe>
+        </div>
+      </div>
+    </section>
+  )}

@@ -1,0 +1,59 @@
+---
+import { s, on, content, nameOf, homeOf, img, icons, social, fallbackFor, initials, phoneHref, type Lang } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content(lang);
+const name = nameOf(lang);
+const home = homeOf(lang);
+const projects = t.projects?.items ?? [];
+const categories = [...new Set(projects.map((x: any) => x.category).filter(Boolean))];
+---
+{projects.length > 0 && (
+    <section id="projects" class="max-w-6xl mx-auto px-5 py-24">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+        <div class="max-w-2xl">
+          <span class="text-primary font-bold text-sm">{t.projects.eyebrow}</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-dark mt-2">{t.projects.title}</h2>
+          {t.projects.intro && <p class="leading-loose text-slate-500 mt-4">{t.projects.intro}</p>}
+        </div>
+        {categories.length > 1 && (
+          <div id="pj-filter" class="flex flex-wrap gap-2">
+            <button type="button" data-cat="" class="pj-chip" data-on>{t.projects.all}</button>
+            {categories.map((c) => <button type="button" data-cat={c} class="pj-chip">{c}</button>)}
+          </div>
+        )}
+      </div>
+      <div class="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {projects.map((x: any, i: number) => (
+          <article data-pj={x.category ?? ''} class="group relative aspect-[4/3] overflow-hidden rounded-3xl bg-dark" style={`background:linear-gradient(${150 + i * 35}deg,var(--brand-primary),var(--brand-dark))`}>
+            {x.image && <img src={img(x.image)} alt={x.title} loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />}
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/20 to-transparent"></div>
+            <div class="absolute top-4 inset-x-4 flex flex-wrap gap-2">
+              {x.category && <span class="rounded-full bg-white/15 backdrop-blur border border-white/20 px-3 py-1 text-xs font-bold text-white">{x.category}</span>}
+              {x.year && <span class="rounded-full bg-accent text-dark px-3 py-1 text-xs font-bold" dir="ltr">{x.year}</span>}
+            </div>
+            <div class="absolute inset-x-0 bottom-0 p-6 text-white">
+              {x.location && <div class="flex items-center gap-1.5 text-xs text-accent font-medium mb-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d={icons.pin} /></svg>{x.location}</div>}
+              <h3 class="text-xl font-bold leading-snug">{x.title}</h3>
+              {x.text && <p class="text-sm text-white/75 leading-relaxed mt-2 line-clamp-2">{x.text}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+
+  <script is:inline>
+    (function () {
+      var bar = document.getElementById('pj-filter');
+      if (!bar) return;
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-cat]');
+        if (!b) return;
+        [].forEach.call(bar.children, function (c) { c.toggleAttribute('data-on', c === b); });
+        document.querySelectorAll('[data-pj]').forEach(function (el) { el.hidden = !!b.dataset.cat && el.dataset.pj !== b.dataset.cat; });
+      });
+    })();
+  </script>
