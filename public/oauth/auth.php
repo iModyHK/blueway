@@ -9,9 +9,22 @@ $siteName = (string) ($site['name'] ?? 'Admin');
 $origin = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https' ? 'https' : 'http') . '://' . preg_replace('/[^a-z0-9.\-:]/i', '', $_SERVER['HTTP_HOST'] ?? '');
 $error = '';
 
-if (empty($cfg['admin_users']) || empty($cfg['github_token']) || empty($cfg['github_repo']) || empty($cfg['session_secret'])) {
-    http_response_code(500);
-    exit('Admin login is not configured in site-config.php');
+$missing = [];
+if (!$cfg) {
+    $missing[] = 'ملف site-config.php غير موجود في المجلد الرئيسي للاستضافة (بجانب public_html)';
+} else {
+    if (empty($cfg['admin_users'])) $missing[] = 'لا يوجد مستخدم للوحة التحكم';
+    if (empty($cfg['session_secret'])) $missing[] = 'session_secret غير محدد';
+    if (empty($cfg['github_repo'])) $missing[] = 'مستودع GitHub غير محدد';
+    if (empty($cfg['github_token'])) $missing[] = 'توكن GitHub غير محدد';
+}
+if ($missing) {
+    http_response_code(503);
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>لوحة التحكم غير مُعدّة</title><style>body{font-family:system-ui,Tahoma,sans-serif;background:#f1f5f9;color:#0f172a;display:grid;place-items:center;min-height:100vh;margin:0;padding:20px}.c{background:#fff;border-radius:16px;padding:28px 30px;max-width:460px;box-shadow:0 10px 30px rgb(0 0 0/.08)}h1{font-size:19px;margin:0 0 8px}p{color:#64748b;margin:0 0 14px;line-height:1.8}li{margin:6px 0;color:#b45309}</style></head><body><div class="c"><h1>لوحة التحكم غير مُعدّة بعد</h1><p>يحتاج المطوّر لإكمال الإعداد من برنامج JA Site Studio ثم رفع ملف site-config.php:</p><ul>';
+    foreach ($missing as $m) echo '<li>' . htmlspecialchars($m) . '</li>';
+    echo '</ul></div></body></html>';
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
